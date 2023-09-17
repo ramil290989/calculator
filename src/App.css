@@ -5,18 +5,45 @@ h1, h2, h3, h4, h5, h6 {
 body {
   font-family: 'Roboto', sans-serif;
 }
+button {
+  width: 60px;
+  height: 60px;
+  border: none;
+  font-weight: 400;
+  font-size: 20px;
+}
 h2 {
   font-weight: 500;
   font-size: 18px;
 }
 .container {
   margin: 0 auto;
-  width: 300px;
+  width: 250px;
+  height: 430px;
   background-color: #f6f6f6;
 }
 .display {
-
+  height: 80px;
 }
-.result-display {
-  
+.display-result {
+  height: 40px;
+}
+.buttons-grid {
+  padding-left: 2px;
+  padding-right: 2px;
+  display: grid;
+  gap: 2px;
+  grid-template-columns: repeat(4, 1fr);
+}
+.redaction-btn {
+  background-color: #aba9a9;
+}
+.operation-btn {
+  background-color: #629bf8;
+}
+.equal-btn {
+  background-color: #f06060;
+}
+.digit-btn {
+  background-color: #8af498;
 }
