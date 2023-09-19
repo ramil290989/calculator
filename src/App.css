@@ -35,15 +35,15 @@ h2 {
   gap: 2px;
   grid-template-columns: repeat(4, 1fr);
 }
-.redaction-btn {
+[data-type="redaction-btn"] {
   background-color: #aba9a9;
 }
-.operation-btn {
+[data-type="operation-btn"] {
   background-color: #629bf8;
 }
-.equal-btn {
+[data-type="equal-btn"] {
   background-color: #f06060;
 }
-.digit-btn {
+[data-type="digit-btn"] {
   background-color: #8af498;
 }
