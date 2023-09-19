@@ -1,8 +1,62 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import icons from '../helpers/icons.js';
+import NumAContext from '../context/NumA.jsx';
+import NumBContext from '../context/NumB.jsx';
+import OperationContext from '../context/Operation.jsx';
+import ResultContext from '../context/Result.jsx';
 
 const Button = (props) => {
+  const { numA, setNumA } = useContext(NumAContext);
+  const { numB, setNumB } = useContext(NumBContext);
+  const { operation, setOperation } = useContext(OperationContext);
+  const { result, setResult } = useContext(ResultContext);
   const { buttonValue } = props;
+
+  const calculate = () => {
+    switch (operation) {
+      case '/':
+        setResult(Number(numA) / Number(numB));
+    }
+  }
+  
+  const setData = (e, value) => {
+    const type = e.target.dataset.type;
+    const setNum = (num) => {
+        switch (value) {
+          case ',':
+            if (num.includes(',')) {
+              return num;
+            }
+            if (!num.length) {
+              return '0,';
+            }
+            return `${num}${value}`;
+          case '0':
+            return num.length === 1 && num[0] === '0' ? '0' : `${num}${value}`;
+          default:
+            return `${num}${value}`;
+        }
+    };
+    const setOperator = () => {
+      !numA.length && setNumA('0');
+      switch (value) {
+        case 'division':
+          setOperation('/');
+          break;
+      }
+    };
+    switch (type) {
+      case 'operation-btn':
+        setOperator();
+        break;
+      case 'digit-btn':
+        operation ? setNumB(setNum(numB)) : setNumA(setNum(numA));
+        break;
+      case 'equal-btn':
+        calculate();
+        break;
+    }
+  }
   const regexp = {
     redaction: /^r.+t$|^b.+e$/i,
     operation: /nt$|on$|us$/,
@@ -10,18 +64,18 @@ const Button = (props) => {
     digit: /\d|,/,
   };
   const buttonAttr = {
-    className: '',
+    dataType: '',
     content: () => regexp.digit.test(buttonValue)
       ? buttonValue
       : <img src={icons[buttonValue]} alt={buttonValue} />,
   };
   Object.keys(regexp).map((type) => {
-    buttonAttr.className = regexp[type].test(buttonValue)
+    buttonAttr.dataType = regexp[type].test(buttonValue)
       ? `${type}-btn`
-      : buttonAttr.className;
+      : buttonAttr.dataType;
   });
   return (
-    <button className={buttonAttr.className} data-value={buttonValue}>{buttonAttr.content()}</button>
+    <button data-type={buttonAttr.dataType} onClick={(e) => setData(e, buttonValue)}>{buttonAttr.content()}</button>
   );
 };
 
