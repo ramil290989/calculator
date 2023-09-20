@@ -5,7 +5,7 @@ const ResultDisplay = () => {
   const { result, setResult } = useContext(ResultContext);
   return (
     <div className="display-result">
-      result = {result}
+      <h3>{result}</h3>
     </div>
   );
 };

@@ -15,17 +15,19 @@ function App() {
   const [result, setResult] = useState('');
   return (
     <div className="container">
-      <NumAContext.Provider value={{ numA, setNumA }}>
-        <NumBContext.Provider value={{ numB, setNumB }}>
-          <OperationContext.Provider value={{ operation, setOperation }}>
-            <ResultContext.Provider value={{ result, setResult }}>
-              <Display />
-              <ResultDisplay />
-              <Buttons />
-            </ResultContext.Provider>
-          </OperationContext.Provider>
-        </NumBContext.Provider>
-      </NumAContext.Provider>
+      <div className="calculator">
+        <NumAContext.Provider value={{ numA, setNumA }}>
+          <NumBContext.Provider value={{ numB, setNumB }}>
+            <OperationContext.Provider value={{ operation, setOperation }}>
+              <ResultContext.Provider value={{ result, setResult }}>
+                <Display />
+                <ResultDisplay />
+                <Buttons />
+              </ResultContext.Provider>
+            </OperationContext.Provider>
+          </NumBContext.Provider>
+        </NumAContext.Provider>
+      </div>
     </div>
   );
 };

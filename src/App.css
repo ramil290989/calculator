@@ -1,4 +1,4 @@
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, p {
   margin: 0;
   padding: 0;
 }
@@ -14,19 +14,33 @@ button {
 }
 h2 {
   font-weight: 500;
-  font-size: 18px;
+  font-size: 22px;
+  padding-right: 10px;
+}
+h3 {
+  font-weight: 700;
+  font-size: 20px;
+  padding-top: 10px;
+  padding-right: 10px;
 }
 .container {
+  padding-top: 20px;
+}
+.calculator {
   margin: 0 auto;
   width: 250px;
   height: 430px;
-  background-color: #f6f6f6;
+  background-color: #ebe7e7;
 }
 .display {
   height: 80px;
+  background-color: #f6f6f6;
+  text-align: right;
 }
 .display-result {
   height: 40px;
+  background-color: #ebe7e7;
+  text-align: right;
 }
 .buttons-grid {
   padding-left: 2px;
