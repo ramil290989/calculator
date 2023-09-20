@@ -9,9 +9,7 @@ const Display = () => {
   const { operation, setOperation } = useContext(OperationContext);
   return (
     <div className="display">
-      <div>A={numA}</div>
-      <div>{operation}</div>
-      <div>B={numB}</div>
+      <div>{numA} {operation} {numB}</div>
     </div>
   );
 };

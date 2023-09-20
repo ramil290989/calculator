@@ -11,16 +11,35 @@ const Button = (props) => {
   const { operation, setOperation } = useContext(OperationContext);
   const { result, setResult } = useContext(ResultContext);
   const { buttonValue } = props;
-
-  const calculate = () => {
-    switch (operation) {
-      case '/':
-        setResult(Number(numA) / Number(numB));
-    }
-  }
   
   const setData = (e, value) => {
     const type = e.target.dataset.type;
+  
+    const calculate = () => {
+      let a = '';
+      if (result) {
+        a = parseFloat(result);
+        setNumA(result);
+      } else {
+        a = parseFloat(numA);
+      }
+      let b = numB.includes('%') ? (a * 0.01 * parseFloat(numB.slice(0, -1))) : parseFloat(numB);
+      switch (operation) {
+        case '/':
+          setResult(String(a / b));
+          break;
+        case '*':
+          setResult(String(a * b));
+          break;
+        case '-':
+          setResult(String(a - b));
+          break;
+        case '+':
+          setResult(String(a + b));
+          break;
+      }
+    };
+
     const setNum = (num) => {
         switch (value) {
           case ',':
@@ -37,14 +56,62 @@ const Button = (props) => {
             return `${num}${value}`;
         }
     };
+
     const setOperator = () => {
       !numA.length && setNumA('0');
+      if (result.length) {
+        setNumA(result);
+        setNumB('');
+      }
       switch (value) {
         case 'division':
           setOperation('/');
           break;
+        case 'multiplication':
+          setOperation('*');
+          break;
+        case 'minus':
+          setOperation('-');
+          break;
+        case 'plus':
+          setOperation('+');
+          break;
+        case 'plusMinus':
+          operation
+            ? setNumB(() => (
+                numB[0] === '-' ? numB.slice(1) : `-${numB}`
+              ))
+            : setNumA(() => (
+                numA[0] === '-' ? numA.slice(1) : `-${numA}`
+              ));
+          break;
+        case 'percent':
+          numB && setNumB(`${numB}%`);
+          break;
       }
     };
+
+    const redaction = () => {
+      switch (value) {
+        case 'reset':
+          setNumA('');
+          setNumB('');
+          setOperation('');
+          setResult('');
+          break;
+        case 'backspace':
+          setResult('');
+          if (numB.length) {
+            setNumB(numB.slice(0, -1));
+          } else if (operation.length) {
+            setOperation('');
+          } else if (numA.length) {
+            setNumA(numA.slice(0, -1));
+          }
+          break;
+      }
+    };
+
     switch (type) {
       case 'operation-btn':
         setOperator();
@@ -55,13 +122,17 @@ const Button = (props) => {
       case 'equal-btn':
         calculate();
         break;
+      case 'redaction-btn':
+        redaction();
+        break;
     }
   }
+
   const regexp = {
     redaction: /^r.+t$|^b.+e$/i,
     operation: /nt$|on$|us$/,
     equal: /al/,
-    digit: /\d|,/,
+    digit: /\d|\./,
   };
   const buttonAttr = {
     dataType: '',
@@ -85,7 +156,7 @@ const Buttons = () => {
     line2: ['7', '8', '9', 'multiplication'],
     line3: ['4', '5', '6', 'minus'],
     line4: ['1', '2', '3', 'plus'],
-    line5: [',', '0', 'plusMinus', 'equal'],
+    line5: ['.', '0', 'plusMinus', 'equal'],
   };
   return (
     <div className="buttons-grid">
